@@ -1,0 +1,39 @@
+package com.faster.fasterboot
+
+import com.quantumn.ruleengine.bean.TradeAuditBo
+import java.util.concurrent.ConcurrentHashMap
+global java.util.concurrent.ConcurrentHashMap<String,Long> scoreMap;
+
+rule "ruleGroup2-txnaudit1"
+    no-loop true
+    agenda-group "ruleGroup2"
+    when
+        bo : TradeAuditBo(card=="002" && amount>30 && amount<100)
+    then
+        System.out.println("hit rule: group2-txnaudit1");
+        if(scoreMap==null){
+            scoreMap = new ConcurrentHashMap<String,Long>(16);
+            scoreMap.put(100,5L);
+        }else{
+            Long score = (Long) scoreMap.get(100);
+            scoreMap.put(100,score+5L);
+        }
+
+end
+
+rule "ruleGroup2-txnaudit2"
+    no-loop true
+    agenda-group "ruleGroup2"
+    when
+        not bo : TradeAuditBo(tradeTime>"01-Mar-2020" && tradeTime<"01-Jun-2020")
+    then
+        System.out.println("hit rule: group2-txnaudit2");
+        if(scoreMap==null){
+            scoreMap = new ConcurrentHashMap<String,Long>(16);
+            scoreMap.put(100,50L);
+        }else{
+            Long score = (Long) scoreMap.get(100);
+            scoreMap.put(100,score+50L);
+        }
+
+end

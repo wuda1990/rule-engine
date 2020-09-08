@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+
+
+    <Loggers>
+        <AsyncLogger name="com.quantumn.future" level="info" additivity="false" includeLocation="true">
+            <AppenderRef ref="console"/>
+        </AsyncLogger>
+        <AsyncRoot level="warn" includeLocation="true">
+            <AppenderRef ref="console"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>
